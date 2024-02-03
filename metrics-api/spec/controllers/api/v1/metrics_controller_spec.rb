@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'swagger_helper'
 
 RSpec.describe Api::V1::MetricsController, type: :request do
   # Setup common test data
