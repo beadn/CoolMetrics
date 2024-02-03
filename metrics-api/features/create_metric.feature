@@ -6,4 +6,4 @@ Feature: Create New Metric
   Scenario: Successfully creating a new metric
     Given I am an API consumer
     When I submit a new metric with name "cpu-load" and value 25
-    Then the metric should be saved in the system
+    Then the metric should be saved and the response should include name "cpu-load" and value 25
