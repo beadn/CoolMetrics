@@ -1,0 +1,51 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to Chrome",
+            "port": 3000,
+            "request": "attach",
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "ruby_lsp",
+            "name": "Debug script",
+            "request": "launch",
+            "program": "ruby ${file}"
+        },
+        {
+            "type": "ruby_lsp",
+            "name": "Debug test",
+            "request": "launch",
+            "program": "ruby -Itest ${relativeFile}"
+        },
+        {
+            "type": "ruby_lsp",
+            "name": "Attach debugger",
+            "request": "attach"
+        },
+        {
+            "name": "RSpec - all",
+            "type": "Ruby",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/rspec",
+            "args": [
+              "-I",
+              "${workspaceRoot}"
+            ]
+          },
+          {
+            "name": "RSpec - current file",
+            "type": "Ruby",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/rspec",
+            "args": [
+              "${file}"
+            ]
+          }
+    ]
+}
