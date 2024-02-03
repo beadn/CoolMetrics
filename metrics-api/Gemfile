@@ -11,6 +11,12 @@ gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 
+
+gem 'rest-client'
+# To rednder json in a fast way
+gem 'fast_jsonapi'
+gem 'active_model_serializers'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
@@ -42,6 +48,10 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'
+  gem 'byebug'
+  gem 'spring'
+  gem 'ruby-debug-ide'
+  gem "debase"
 end
 
 group :development do
