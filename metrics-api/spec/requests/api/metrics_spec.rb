@@ -34,5 +34,36 @@ describe 'Metrics API' do
       end
     end
 
+
+    get 'Retrieves metrics' do
+      tags 'Metrics'
+      produces 'application/json'
+      parameter name: :name, in: :query, type: :string, required: false, description: 'Name of the metric to filter by'
+
+      response '200', 'metrics found' do
+        schema type: :object,
+               properties: {
+                 data: {
+                   type: :array,
+                   items: {
+                     type: :object,
+                     properties: {
+                       id: { type: :string },
+                       type: { type: :string },
+                       attributes: {
+                         type: :object,
+                         properties: {
+                           name: { type: :string },
+                           value: { type: :number },
+                           timestamp: { type: :string, format: 'date-time' }
+                         }
+                       }
+                     }
+                   }
+                 }
+               }
+        run_test!
+      end
+    end
   end
 end
