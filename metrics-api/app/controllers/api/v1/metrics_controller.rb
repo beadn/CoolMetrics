@@ -11,7 +11,23 @@ module Api
           end
         end
 
+
+      # GET /metrics
+      def index
+        if params[:name]
+          metrics = Metric.where(name: params[:name])
+        else
+          metrics = Metric.all
+        end
+
+        render json: MetricSerializer.new(metrics).serialized_json
+      end
+
         private
+
+        def render_not_found
+          render json: { error: 'Metric not found' }, status: :not_found
+        end
 
         def metric_params
             params.require(:metric).permit(:name, :value, :timestamp)

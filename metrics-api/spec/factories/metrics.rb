@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :metric do
-    name { "MyString" }
-    value { 1 }
-    timestamp { "2024-02-02 22:18:34" }
+    timestamp { Time.current }
+    name { ["cpu-usage", "memory-usage", "disk-usage", "network-traffic", "database-load"].sample }
+    value { rand(1..100) }
   end
 end
