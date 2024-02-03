@@ -1,0 +1,44 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/metrics":
+    post:
+      summary: Creates a metric
+      tags:
+      - Metrics
+      parameters: []
+      responses:
+        '201':
+          description: metric created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                metric:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    value:
+                      type: string
+                    timestamp:
+                      type: string
+                      format: datetime
+                  required:
+                  - name
+                  - value
+                  - timestamp
+              required:
+              - metric
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
