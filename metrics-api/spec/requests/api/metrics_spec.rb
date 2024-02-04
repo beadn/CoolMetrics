@@ -29,16 +29,16 @@ describe 'Metrics API' do
       end
 
       response '422', 'invalid request' do
-        let(:metric) { { name: '', value: '', timestamp: '' } } # Assuming this leads to validation errors
+        let(:metric) { { name: '', value: '', timestamp: '' } }
         run_test!
       end
     end
-
 
     get 'Retrieves metrics' do
       tags 'Metrics'
       produces 'application/json'
       parameter name: :name, in: :query, type: :string, required: false, description: 'Name of the metric to filter by'
+      parameter name: :time_frame, in: :query, type: :string, required: false, description: 'Time frame for aggregating data (minute, hour, day)'
 
       response '200', 'metrics found' do
         schema type: :object,

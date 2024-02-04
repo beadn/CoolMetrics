@@ -1,20 +1,23 @@
-Feature: Visualize Metrics
+Feature: Visualize Metrics Aggregated by Time Frame
   As an API consumer
-  I want to retrieve aggregated metrics by Time Frame
-  So that I can view them on a timeline
+  I want to retrieve metrics aggregated by a specified time frame
+  So that I can analyze metric trends over time on a timeline
 
- Scenario: Retrieve all metrics aggregated by Minute
+  Background: 
     Given there are existing metrics
-    When I request all metrics with Time Frame "minute"
-    Then I should see all the metrics aggregated by minutes
 
-Scenario: Retrieve all metrics aggregated by Hour
-    Given there are existing metrics
-    When I request all metrics with Time Frame "hour"
-    Then I should see all the metrics aggregated by hour
+  Scenario: Retrieve metrics aggregated by minute
+    When I request all metrics to be aggregated by "minute"
+    Then I should see all the metrics aggregated by "minute"
 
+  Scenario: Retrieve metrics aggregated by hour
+    When I request all metrics to be aggregated by "hour"
+    Then I should see all the metrics aggregated by "hour"
 
-Scenario: Retrieve all metrics aggregated by day
-    Given there are existing metrics
-    When I request all metrics with Time Frame "day"
-    Then I should see all the metrics aggregated by day
+  Scenario: Retrieve metrics aggregated by day
+    When I request all metrics to be aggregated by "day"
+    Then I should see all the metrics aggregated by "day"
+
+  Scenario: Retrieve metrics by name aggregated by day
+    When I request all metrics for "memory-usage" to be aggregated by "day"
+    Then the aggregation should include only "memory-usage" metrics
