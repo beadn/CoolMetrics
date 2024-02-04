@@ -63,4 +63,11 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+
+  config.after(:all) do
+    # Destroy all Metric records created by FactoryBot
+    FactoryBot.rewind_sequences # Reset FactoryBot sequences
+    Metric.destroy_all
+  end
 end

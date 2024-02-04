@@ -3,6 +3,7 @@ module Api
     class MetricsController < ActionController::API
       # POST /metrics
       def create
+        
         metric = Metric.new(metric_params)
         if metric.save
           render json: MetricSerializer.new(metric).serialized_json, status: :created
