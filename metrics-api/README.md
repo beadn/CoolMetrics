@@ -40,8 +40,7 @@ To get a local copy up and running, follow these simple steps.
     ```
 
 ### Running the Application
-
-    To start the Rails server:
+To start the Rails server:
 
     ```bash
     rails s
