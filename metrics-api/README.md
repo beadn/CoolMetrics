@@ -44,7 +44,7 @@ To start the Rails server:
 
     ```bash
     rails s
-
+    ```
 ### API Documentation
 To see the documentation you can visit the next URL:
 http://localhost:3000/api-docs/index.html
