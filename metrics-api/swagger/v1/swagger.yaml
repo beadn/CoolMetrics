@@ -48,6 +48,12 @@ paths:
         description: Name of the metric to filter by
         schema:
           type: string
+      - name: time_frame
+        in: query
+        required: false
+        description: Time frame for aggregating data (minute, hour, day)
+        schema:
+          type: string
       responses:
         '200':
           description: metrics found
