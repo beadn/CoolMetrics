@@ -19,6 +19,12 @@ gem 'active_model_serializers'
 
 gem 'rswag-api'
 gem 'rswag-ui'
+
+gem 'groupdate'
+
+
+gem 'faker'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
