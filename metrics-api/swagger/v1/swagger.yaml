@@ -1,88 +1,128 @@
----
 openapi: 3.0.1
 info:
   title: API V1
+  description: This API provides endpoints for managing and retrieving metrics. Please fill defaultHost variable with your local instance of metrics-api
   version: v1
+
+servers:
+  - url: https://{defaultHost}/api/v1
+    variables:
+      defaultHost:
+        default: localhost:3000
+        description: Please replace here with your local instance of metrics-api
+
 paths:
-  "/api/v1/metrics":
+  /metrics:
     post:
       summary: Creates a metric
       tags:
-      - Metrics
-      parameters: []
-      responses:
-        '201':
-          description: metric created
-        '422':
-          description: invalid request
+        - Metrics
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                metric:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    value:
-                      type: string
-                    timestamp:
-                      type: string
-                      format: datetime
-                  required:
-                  - name
-                  - value
-                  - timestamp
-              required:
-              - metric
-    get:
-      summary: Retrieves metrics
-      tags:
-      - Metrics
-      parameters:
-      - name: name
-        in: query
-        required: false
-        description: Name of the metric to filter by
-        schema:
-          type: string
-      - name: time_frame
-        in: query
-        required: false
-        description: Time frame for aggregating data (minute, hour, day)
-        schema:
-          type: string
+              $ref: '#/components/schemas/MetricRequest'
       responses:
-        '200':
-          description: metrics found
+        '201':
+          description: Metric created successfully.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        type:
-                          type: string
-                        attributes:
-                          type: object
-                          properties:
-                            name:
-                              type: string
-                            value:
-                              type: number
-                            timestamp:
-                              type: string
-                              format: date-time
-servers:
-- url: https://{defaultHost}
-  variables:
-    defaultHost:
-      default: www.example.com
+                $ref: '#/components/schemas/MetricResponse'
+        '422':
+          description: Invalid request parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    get:
+      summary: Retrieves metrics
+      tags:
+        - Metrics
+      parameters:
+        - $ref: '#/components/parameters/MetricName'
+        - $ref: '#/components/parameters/TimeFrame'
+      responses:
+        '200':
+          description: Metrics found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricsListResponse'
+
+components:
+  schemas:
+    MetricRequest:
+      type: object
+      properties:
+        metric:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+            timestamp:
+              type: string
+              format: date-time
+          required:
+            - name
+            - value
+            - timestamp
+      required:
+        - metric
+
+    MetricResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/MetricAttributes'
+
+    MetricAttributes:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: number
+        timestamp:
+          type: string
+          format: date-time
+
+    MetricsListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetricResponse'
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message detailing what went wrong.
+
+  parameters:
+    MetricName:
+      name: name
+      in: query
+      description: Name of the metric to filter by.
+      schema:
+        type: string
+
+    TimeFrame:
+      name: time_frame
+      in: query
+      description: Time frame for aggregating data (minute, hour, day).
+      schema:
+        type: string
+
+  # Add securitySchemes here if your API requires authentication.

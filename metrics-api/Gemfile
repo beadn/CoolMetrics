@@ -25,6 +25,7 @@ gem 'groupdate'
 
 gem 'faker'
 
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
@@ -61,6 +62,7 @@ group :development, :test do
   gem 'ruby-debug-ide'
   gem 'debase'
   gem 'rswag-specs'
+  gem 'rails-controller-testing'
 end
 
 group :development do

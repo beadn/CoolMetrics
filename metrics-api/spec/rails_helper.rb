@@ -70,4 +70,5 @@ RSpec.configure do |config|
     FactoryBot.rewind_sequences # Reset FactoryBot sequences
     Metric.destroy_all
   end
+
 end

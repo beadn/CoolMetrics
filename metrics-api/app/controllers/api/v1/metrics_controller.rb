@@ -14,25 +14,24 @@ module Api
 
       # GET /metrics
       def index
-
-        limit_clause = 60
+        limit_clause = 1000
+      
         # Validate time frame if present
         if params[:time_frame].present? && !['minute', 'hour', 'day'].include?(params[:time_frame])
           return render json: { error: 'Invalid time frame' }, status: :bad_request
         end
-
-        metrics = Metric.all.limit(limit_clause) #By default SQL String limit 255 character 
-        #Ex:- :limit => 40
-
+      
+        @metrics = Metric.all.limit(limit_clause) # Assign @metrics instead of metrics
+      
         # Conditionally filter by name if parameter is present
-        metrics = metrics.where(name: params[:name]).limit(limit_clause) if params[:name].present?
-
+        @metrics = @metrics.where(name: params[:name]).limit(limit_clause) if params[:name].present?
+      
         # Aggregate metrics based on time_frame if parameter is present
         if params[:time_frame].present?
-          metrics = aggregate_metrics(metrics, params[:time_frame])
+          @metrics = aggregate_metrics(@metrics, params[:time_frame])
         end
-
-        render json: MetricSerializer.new(metrics).serialized_json
+      
+        render json: MetricSerializer.new(@metrics).serialized_json
       end
 
       private
