@@ -39,6 +39,7 @@ const Dashboard = ({ initialTimeFrame = 'minute' }) => {
       });
       setMetricsData(processData(response.data)); // Adjust based on the structure of your response
     } catch (error) {
+      console.log(error);
       setFetchError(true); 
     }
   }, [timeFrame]); 
@@ -73,11 +74,11 @@ const Dashboard = ({ initialTimeFrame = 'minute' }) => {
       <Grid container spacing={2}>
         {metricsData.map((metricData, index) => (
           <Grid item xs={6} key={index}>
-            <Box height="300px">
-              <Typography variant="h5" color={colors.greenAccent[400]} alignContent="center" textAlign="center">
+            <Box height="300px" mt="20px">
+            <LineChart data={[metricData]} xAxisFormat={xAxisFormat} />
+            <Typography variant="h5" color={colors.greenAccent[400]} alignContent="center" textAlign="center" >
                 {metricData.id}
               </Typography>
-              <LineChart data={[metricData]} xAxisFormat={xAxisFormat} />
             </Box>
           </Grid>
         ))}
