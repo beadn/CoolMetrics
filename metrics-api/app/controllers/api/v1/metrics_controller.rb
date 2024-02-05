@@ -15,7 +15,7 @@ module Api
       # GET /metrics
       def index
 
-        limit_clause = 60
+        limit_clause = 1000
         # Validate time frame if present
         if params[:time_frame].present? && !['minute', 'hour', 'day'].include?(params[:time_frame])
           return render json: { error: 'Invalid time frame' }, status: :bad_request

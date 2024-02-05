@@ -62,22 +62,24 @@ To get a local copy up and running, follow these simple steps.
 To see the documentation you can visit the next URL:
 http://localhost:3000/api-docs/index.html
 
-### Deployment
+#### Some Examples
 
-To deploy this application, you can follow the standard Rails deployment methods. If deploying to Heroku, the following steps are a general guideline:
-
-1. **Create a Heroku app**
-
+1. **GET**
     ```bash
-    heroku create metrics-api
-2. **Deploy your application to Heroku**
+        curl --request GET \
+        --url 'http://localhost:3000/api/v1/metrics?time_frame=day' \
+        --header 'Content-Type: application/json' \
+        --header 'User-Agent: insomnia/8.6.0'
+      ```
 
+2. **POST**
     ```bash
-    git push heroku main
-3. **Migrate your database on Heroku**
-
-    ```bash
-    heroku run rails db:migrate
-
-### License
-Distributed under the MIT License. See LICENSE for more information.
+        curl --request POST \
+        --url http://localhost:3000/api/v1/metrics \
+        --header 'Content-Type: application/json' \
+        --header 'User-Agent: insomnia/8.6.0' \
+        --data '{
+	        "name": "cpu-load",
+	        "value": "61.0"
+            }'
+      ```
