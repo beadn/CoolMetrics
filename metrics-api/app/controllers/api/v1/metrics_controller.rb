@@ -14,15 +14,18 @@ module Api
 
       # GET /metrics
       def index
+
+        limit_clause = 60
         # Validate time frame if present
         if params[:time_frame].present? && !['minute', 'hour', 'day'].include?(params[:time_frame])
           return render json: { error: 'Invalid time frame' }, status: :bad_request
         end
 
-        metrics = Metric.all
+        metrics = Metric.all.limit(limit_clause) #By default SQL String limit 255 character 
+        #Ex:- :limit => 40
 
         # Conditionally filter by name if parameter is present
-        metrics = metrics.where(name: params[:name]) if params[:name].present?
+        metrics = metrics.where(name: params[:name]).limit(limit_clause) if params[:name].present?
 
         # Aggregate metrics based on time_frame if parameter is present
         if params[:time_frame].present?
@@ -45,11 +48,21 @@ module Api
                    when 'day' then 'day'
                    end
 
+        minimum_date = case time_frame
+                   when 'minute' then Time.now - 60.minutes
+                   when 'hour' then Time.now - 24.hours
+                   when 'day' then Time.now - 7.days
+                   else Time.now - 60.minutes # Default to last 60 minutes
+                   end
+    
+   
         # Adjust the aggregation query to efficiently handle the grouping and selection
         select_statement = "date_trunc('#{interval}', timestamp) AS timestamp, AVG(value) AS value"
         group_by_clause = "date_trunc('#{interval}', timestamp)"
-        metrics = metrics.select("name, #{select_statement}, COUNT(*) AS count").group("name, #{group_by_clause}").order("name, timestamp")
-      end
+        metrics = metrics.select("name, #{select_statement}, COUNT(*) AS count").group("name, #{group_by_clause}").order("name, timestamp").where('timestamp > ?', minimum_date)
+ 
+   metrics
+  end
     end
   end
 end
