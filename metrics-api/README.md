@@ -40,12 +40,24 @@ To get a local copy up and running, follow these simple steps.
     ```
 
 ### Running the Application
-To start the Rails server:
+1. **Start the application**
 
     ```bash
     rails server
     ```
 
+
+### Test APP
+1. **Start Feature Tests**
+
+    ```bash
+    bundle exec cucumber
+    ```
+1. **Start Unit Tests**
+
+    ```bash
+    bundle exec rspec
+    ```
 ### API Documentation
 To see the documentation you can visit the next URL:
 http://localhost:3000/api-docs/index.html
@@ -58,17 +70,14 @@ To deploy this application, you can follow the standard Rails deployment methods
 
     ```bash
     heroku create metrics-api
-
 2. **Deploy your application to Heroku**
 
     ```bash
     git push heroku main
-
 3. **Migrate your database on Heroku**
 
     ```bash
     heroku run rails db:migrate
-
 
 ### License
 Distributed under the MIT License. See LICENSE for more information.
