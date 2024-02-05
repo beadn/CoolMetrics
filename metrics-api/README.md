@@ -48,12 +48,12 @@ To get a local copy up and running, follow these simple steps.
 
 
 ### Test APP
-1. **Start Feature Tests**
+1. **Execute E2E Tests**
 
     ```bash
     bundle exec cucumber
     ```
-1. **Start Unit Tests**
+1. **Execute other Tests**
 
     ```bash
     bundle exec rspec
