@@ -6,7 +6,7 @@
 
 - **Ruby version:** 3.3.0
 - **Rails version:** 7.1.3
-- **Database:** PostgreSQL
+- **PostgreSQL:** 14.10 (Homebrew)
 
 ## Getting Started
 
