@@ -8,9 +8,9 @@
 
 ## Requirements
 
-- **node** 
-- **npm** 
-- **metrics-api** 
+- **node:** v21.6.1
+- **npm:** v10.2.4
+- **metrics-api:** v1:0 
 
 ## Getting Started
 
@@ -29,7 +29,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     ```bash
     npm install
     ```
-`npm install`  
+
 
 
 ### Running the Application
@@ -38,9 +38,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
     See instructions in: `../metrics-api/README.md` 
 
-    NOTE: The server should be running in: 
+    **NOTE:** The server should be running in: http://localhost:3000/. It is recommended to seed the database with `rails db:seed`  to have initial mock data in the database.
 
-    `http://localhost:3000/` 
+
 
 2. **Start the application**
 
@@ -49,7 +49,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     ```
 3. **Visit App**
 
-    `http://localhost:3001/` 
+    `http://localhost:3005/` 
 
 ### Test APP
 1. **Start Unit Tests**

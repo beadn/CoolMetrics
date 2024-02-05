@@ -58,6 +58,12 @@ To get a local copy up and running, follow these simple steps.
     ```bash
     bundle exec rspec
     ```
+
+### API URL
+
+The url of the API is :
+http://localhost:3000/api/v1/metrics 
+
 ### API Documentation
 To see the documentation you can visit the next URL:
 http://localhost:3000/api-docs/index.html
