@@ -78,19 +78,19 @@ Leveraging the MVC pattern (sans views, given its API-centric nature), our backe
 * `React:` Facilitates the creation of dynamic user interfaces, making it an ideal choice for real-time data visualization.
 
 #### Key Components
-* **App Component:** Serves as the entry point of the frontend application, integrating Material-UI's ThemeProvider for theme customization and managing the sidebar visibility state. It also sets up routing with React Router to navigate between different parts of the application, although the current implementation primarily focuses on the Dashboard.
+* `App:` Serves as the entry point of the frontend application, integrating Material-UI's ThemeProvider for theme customization and managing the sidebar visibility state. It also sets up routing with React Router to navigate between different parts of the application, although the current implementation primarily focuses on the Dashboard.
 
-* **Dashboard Component:** Acts as the core scene for metrics visualization. It dynamically fetches and displays metrics data based on user-selected time frames (minute, hour, day) using axios for API requests. The useEffect hook triggers data fetching on component mount and at a regular interval, ensuring the displayed data is regularly updated.
+* `Dashboard:` Acts as the core scene for metrics visualization. It dynamically fetches and displays metrics data based on user-selected time frames (minute, hour, day) using axios for API requests. The useEffect hook triggers data fetching on component mount and at a regular interval, ensuring the displayed data is regularly updated.
 
-* **LineChart Component:** Utilizes the @nivo/line library to render responsive line charts based on the processed metrics data. It is designed to adapt to the current theme and provides a customizable user experience through props like data and xAxisFormat.
+* `LineChart:` Utilizes the @nivo/line library to render responsive line charts based on the processed metrics data. It is designed to adapt to the current theme and provides a customizable user experience through props like data and xAxisFormat.
 
 #### Technical Decisions and Trade-offs
-* **Data Handling:** The application fetches metrics data from the backend using axios, processing this data to fit the structure expected by the LineChart component. State management is handled through React's useState hook, managing states for the time frame selection, metrics data, and fetch errors. The useCallback hook is used to memoize the fetchData function, preventing unnecessary re-creations of this function and optimizing performance during re-renders.
+* `Data Handling`: The application fetches metrics data from the backend using axios, processing this data to fit the structure expected by the LineChart component. State management is handled through React's useState hook, managing states for the time frame selection, metrics data, and fetch errors. The useCallback hook is used to memoize the fetchData function, preventing unnecessary re-creations of this function and optimizing performance during re-renders.
 
-* **Theme and UI Customization:** The application leverages Material-UI's theming capabilities, providing a consistent and customizable design system. The useTheme hook and a custom ColorModeContext are used to toggle between light and dark modes, enhancing the user interface's adaptability.
-
-* **Testing Strategy:**
-The testing strategy for the frontend focuses on unit tests for the Dashboard component, verifying its functionality regarding data fetching, state management, and user interaction.
+* `UX\UI`:In the current version, enhancements to the interface and user experience have been minimal, adhering to a standard approach. Recognizing the critical importance of these elements it is an aspect that can be improved in the future.
+  * **Theme and UI Customization:** The application leverages Material-UI's theming capabilities, providing a consistent and customizable design system. The useTheme hook and a custom ColorModeContext are used to toggle between light and dark modes, enhancing the user interface's adaptability.  
+  
+* The `testing strategy` focuses on unit tests for the Dashboard component, verifying its functionality regarding data fetching, state management, and user interaction. Other kind of test can be incorporated in the future.
 
 #### Next Steps and Improvements
 * **Error Handling:** Implement robust error handling within the Dashboard component to manage and display informative error messages to the user when data fetching fails. This could involve retry mechanisms or more detailed error messages based on the type of error encountered.
