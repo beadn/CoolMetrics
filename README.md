@@ -26,41 +26,41 @@ CoolMetrics addresses the need for a generic metrics analysis tool that can be t
  ## Technical Decisions and Architecture
 At its core, CoolMetrics exemplifies a design philosophy anchored in clarity and scalability, eschewing unnecessary complexity to foster an environment conducive to adaptation and growth. The architecture is compartmentalized into distinct, focused components:
 
-* `metrics-api:` A Ruby on Rails-based API that serves as the backbone for metrics collection and storage
+* **metrics-api:** A Ruby on Rails-based API that serves as the backbone for metrics collection and storage
 
-* `metrics-dashboard:` A React-powered frontend that provides an intuitive interface for metrics visualization.
+* **metrics-dashboard:** A React-powered frontend that provides an intuitive interface for metrics visualization.
 
-* `metrics-generator (metrics-script):`  A testing utility crafted as a Bash script to simulate the continuous submission of metrics, facilitating thorough testing and demonstration.
+* **metrics-generator (metrics-script):** A testing utility crafted as a Bash script to simulate the continuous submission of metrics, facilitating thorough testing and demonstration.
 
 
 ### Backend: metrics-api
 #### Technology Stack
 
-* `Ruby on Rails` offers rapid API development with its convention-over-configuration paradigm, perfectly complementing our need for a RESTful API framework.
+* **Ruby on Rails** offers rapid API development with its convention-over-configuration paradigm, perfectly complementing our need for a RESTful API framework.
 
-* `PostgreSQL` brings to the table sophisticated data aggregation capabilities, crucial for the time-based analysis of metrics.
+* **PostgreSQL** brings to the table sophisticated data aggregation capabilities, crucial for the time-based analysis of metrics.
 
 #### Structure
 Leveraging the MVC pattern (sans views, given its API-centric nature), our backend architecture is a testament to the robustness and scalability inherent to Rails.
 
 ##### Database (Persistence)
-* The `metrics` table is the backbone of our database schema, designed to store metrics with attributes for name, value, and timestamp.
+* The **metrics** table is the backbone of our database schema, designed to store metrics with attributes for name, value, and timestamp.
 * Indexing on the `name` field enhances query performance, facilitating efficient metric retrieval and aggregation.
 
 ##### Models & Controllers
-* The `Metric` model encapsulates the essence of our data, ensuring integrity and validation.
+* The **Metric** model encapsulates the essence of our data, ensuring integrity and validation.
 
-* `MetricController` is the conduit through which metrics are both ingested (POST) and queried (GET), with aggregation logic finely tuned for minute, hour, and day breakdowns.
+* **MetricController** is the conduit through which metrics are both ingested (POST) and queried (GET), with aggregation logic finely tuned for minute, hour, and day breakdowns.
 
 #### Technical Decisions and Trade-offs
 
-* This version dispenses with `authentication and authorization strategy`; however, a system based on key API Or OAth2.0 could be implemented for the future.
+* This version dispenses with **authentication and authorization strategy**; however, a system based on key API Or OAth2.0 could be implemented for the future.
 
-* In the current implementation, specific `error handling strategies` beyond basic validation errors are not implemented. Future versions could enhance resilience by handling common errors such as database timeouts or connectivity issues, providing clear error responses to API consumers.
+* In the current implementation, specific **error handling strategies** beyond basic validation errors are not implemented. Future versions could enhance resilience by handling common errors such as database timeouts or connectivity issues, providing clear error responses to API consumers.
 
-* The application adopt a `API versioning strategy` within the URL path (e.g., /api/v1/metrics for the current version and /api/v2/metrics for future versions). This approach allows for parallel development of different API versions and smoother transition paths for API consumers. Version-specific changes can be managed through namespaced controllers and route configurations to ensure clear separation of logic between versions.
+* The application adopt a **API versioning strategy** within the URL path (e.g., /api/v1/metrics for the current version and /api/v2/metrics for future versions). This approach allows for parallel development of different API versions and smoother transition paths for API consumers. Version-specific changes can be managed through namespaced controllers and route configurations to ensure clear separation of logic between versions.
   
-* The application adopts a `Behavior-Driven Development (BDD)` approach with Cucumber for defining application behavior in plain language (**E2E tests**), making tests understandable to non-technical stakeholders. Additionally, **RSpec** is used for **unit and integration testing**.
+* The application adopts a **Behavior-Driven Development (BDD)** approach with Cucumber for defining application behavior in plain language (**E2E tests**), making tests understandable to non-technical stakeholders. Additionally, **RSpec** is used for **unit and integration testing**.
 
 #### Next Steps and Improvements
 * **Scalability Considerations:** 
@@ -75,22 +75,22 @@ Leveraging the MVC pattern (sans views, given its API-centric nature), our backe
 
 #### Technology Stack
 
-* `React:` Facilitates the creation of dynamic user interfaces, making it an ideal choice for real-time data visualization.
+* **React:** Facilitates the creation of dynamic user interfaces, making it an ideal choice for real-time data visualization.
 
 #### Key Components
-* `App:` Serves as the entry point of the frontend application, integrating Material-UI's ThemeProvider for theme customization and managing the sidebar visibility state. It also sets up routing with React Router to navigate between different parts of the application, although the current implementation primarily focuses on the Dashboard.
+* **App:** Serves as the entry point of the frontend application, integrating Material-UI's ThemeProvider for theme customization and managing the sidebar visibility state. It also sets up routing with React Router to navigate between different parts of the application, although the current implementation primarily focuses on the Dashboard.
 
-* `Dashboard:` Acts as the core scene for metrics visualization. It dynamically fetches and displays metrics data based on user-selected time frames (minute, hour, day) using axios for API requests. The useEffect hook triggers data fetching on component mount and at a regular interval, ensuring the displayed data is regularly updated.
+* **Dashboard:** Acts as the core scene for metrics visualization. It dynamically fetches and displays metrics data based on user-selected time frames (minute, hour, day) using axios for API requests. The useEffect hook triggers data fetching on component mount and at a regular interval, ensuring the displayed data is regularly updated.
 
-* `LineChart:` Utilizes the @nivo/line library to render responsive line charts based on the processed metrics data. It is designed to adapt to the current theme and provides a customizable user experience through props like data and xAxisFormat.
+* **LineChart:** Utilizes the @nivo/line library to render responsive line charts based on the processed metrics data. It is designed to adapt to the current theme and provides a customizable user experience through props like data and xAxisFormat.
 
 #### Technical Decisions and Trade-offs
-* `Data Handling`: The application fetches metrics data from the backend using axios, processing this data to fit the structure expected by the LineChart component. State management is handled through React's useState hook, managing states for the time frame selection, metrics data, and fetch errors. The useCallback hook is used to memoize the fetchData function, preventing unnecessary re-creations of this function and optimizing performance during re-renders.
+* **Data Handling:** The application fetches metrics data from the backend using axios, processing this data to fit the structure expected by the LineChart component. State management is handled through React's useState hook, managing states for the time frame selection, metrics data, and fetch errors. The useCallback hook is used to memoize the fetchData function, preventing unnecessary re-creations of this function and optimizing performance during re-renders.
 
-* `UX\UI`:In the current version, enhancements to the interface and user experience have been minimal, adhering to a standard approach. Recognizing the critical importance of these elements it is an aspect that can be improved in the future.
+* **UX\UI:** In the current version, enhancements to the interface and user experience have been minimal, adhering to a standard approach. Recognizing the critical importance of these elements it is an aspect that can be improved in the future.
   * **Theme and UI Customization:** The application leverages Material-UI's theming capabilities, providing a consistent and customizable design system. The useTheme hook and a custom ColorModeContext are used to toggle between light and dark modes, enhancing the user interface's adaptability.  
   
-* The `testing strategy` focuses on unit tests for the Dashboard component, verifying its functionality regarding data fetching, state management, and user interaction. Other kind of test can be incorporated in the future.
+* The **testing strategy** focuses on unit tests for the Dashboard component, verifying its functionality regarding data fetching, state management, and user interaction. Other kind of test can be incorporated in the future.
 
 #### Next Steps and Improvements
 * **Error Handling:** Implement robust error handling within the Dashboard component to manage and display informative error messages to the user when data fetching fails. This could involve retry mechanisms or more detailed error messages based on the type of error encountered.
