@@ -45,7 +45,7 @@ Leveraging the MVC pattern (sans views, given its API-centric nature), our backe
 
 ##### Database (Persistence)
 * The **metrics** table is the backbone of our database schema, designed to store metrics with attributes for name, value, and timestamp.
-* Indexing on the `name` field enhances query performance, facilitating efficient metric retrieval and aggregation.
+* Indexing on the **name** field enhances query performance, facilitating efficient metric retrieval and aggregation.
 
 ##### Models & Controllers
 * The **Metric** model encapsulates the essence of our data, ensuring integrity and validation.
