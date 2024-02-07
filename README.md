@@ -2,15 +2,12 @@
 
 - [CoolMetrics: Frontend + Backend Metrics Application](#coolmetrics-frontend--backend-metrics-application)
   - [Overview](#overview)
-  - [Use Cases](#use-cases)
-  - [Application Structure](#application-structure)
-  - [Architecture](#architecture)
-  - [Backend: metrics-api#](#backend-metrics-api)
+  - [Technical Decisions and Architecture](#technical-decisions-and-architecture)
+    - [Backend: metrics-api](#backend-metrics-api)
       - [Technology Stack](#technology-stack)
       - [Structure](#structure)
         - [Database (Persistence)](#database-persistence)
-        - [Models](#models)
-        - [Controllers](#controllers)
+        - [Models \& Controllers](#models--controllers)
       - [Technical Decisions and Trade-offs](#technical-decisions-and-trade-offs)
       - [Next Steps and Improvements](#next-steps-and-improvements)
     - [Frontend: metrics-dashboard](#frontend-metrics-dashboard)
@@ -22,54 +19,48 @@
 
 
  ## Overview
-Welcome to CoolMetrics, an application designed to post and visualize metrics in real-time. This solution consists of two main components: metrics-api, a Ruby on Rails API backed by PostgreSQL for data persistence, and metrics-dashboard, a React application for the front-end visualization of metrics. This document outlines the technical decisions, architecture, and future enhancement plans for CoolMetrics.
+**Welcome to CoolMetrics!** 
 
- ## Use Cases
-* **Real-time Metrics Submission:** New metrics data, including timestamps, names, and values, can be added to the application.
-* **Metrics Visualization:** The application displays metrics in a timeline, offering insights into trends over selectable time frames.
-* **Data Aggregation:** Users can view average metric values aggregated by minute, hour, or day to analyze patterns and performance over time.
+CoolMetrics addresses the need for a generic metrics analysis tool that can be tailored to any sector.It is designed to collect, store, and analyze metrics. Aimed at users who need to monitor and analyze metrics data. This document outlines the technical decisions, architecture, and future enhancement plans for CoolMetrics.
 
- ## Application Structure
-CoolMetrics is designed with a clear separation of concerns in mind, dividing the workload between a back-end service responsible for data management and a front-end service for data visualization.
+ ## Technical Decisions and Architecture
+At its core, CoolMetrics exemplifies a design philosophy anchored in clarity and scalability, eschewing unnecessary complexity to foster an environment conducive to adaptation and growth. The architecture is compartmentalized into distinct, focused components:
 
-* **Back-end (metrics-api):** A Ruby on Rails API that handles data persistence in a PostgreSQL database and provides endpoints for metric submission and retrieval.
+* `metrics-api:` A Ruby on Rails-based API that serves as the backbone for metrics collection and storage
 
-* **Front-end (metrics-dashboard):** A React application that consumes the API to present metrics data in a user-friendly and interactive timeline.
+* `metrics-dashboard:` A React-powered frontend that provides an intuitive interface for metrics visualization.
 
-* **metrics-generator (metrics-script):** A Bash script designed to simulate real-time metrics submission, aiding in testing and demonstration.
+* `metrics-generator (metrics-script):`  A testing utility crafted as a Bash script to simulate the continuous submission of metrics, facilitating thorough testing and demonstration.
 
 
-## Architecture
-
-## Backend: metrics-api#
+### Backend: metrics-api
 #### Technology Stack
 
-* **Ruby on Rails:** Offers a convention-over-configuration approach that accelerates API development and includes built-in support for RESTful APIs.
+* `Ruby on Rails` offers rapid API development with its convention-over-configuration paradigm, perfectly complementing our need for a RESTful API framework.
 
-* **PostgreSQL:**: Provides advanced data aggregation and manipulation capabilities essential for the metrics' time-based grouping.
+* `PostgreSQL` brings to the table sophisticated data aggregation capabilities, crucial for the time-based analysis of metrics.
 
 #### Structure
-An MVC pattern has been used (it does not need a view because it is an API) and it is the standard in rails.
+Leveraging the MVC pattern (sans views, given its API-centric nature), our backend architecture is a testament to the robustness and scalability inherent to Rails.
 
 ##### Database (Persistence)
-* **Tables:** The `metrics` table is central to the application, designed to store individual metrics with fields for name, value, and timestamp.
-* **Indexes:** An index on the `name field` of the metrics table ensures quick lookup times for queries filtering by metric names, significantly improving query performance for data retrieval and aggregation.
+* The `metrics` table is the backbone of our database schema, designed to store metrics with attributes for name, value, and timestamp.
+* Indexing on the `name` field enhances query performance, facilitating efficient metric retrieval and aggregation.
 
-##### Models 
-* **Metric:** Responsible for storing and validating metric data. 
+##### Models & Controllers
+* The `Metric` model encapsulates the essence of our data, ensuring integrity and validation.
 
-##### Controllers 
-* **MetricController:** Provides RESTful endpoints for creating new metrics (POST /metrics) and retrieving aggregated metrics data (GET /metrics), with support for filtering by name and time frames. Also,it implements the logic to aggregate metrics based on the requested time frame (minute, hour, day)
+* `MetricController` is the conduit through which metrics are both ingested (POST) and queried (GET), with aggregation logic finely tuned for minute, hour, and day breakdowns.
 
 #### Technical Decisions and Trade-offs
 
-* **Authentication & Authorization:** While not implemented in the current scope, future enhancements could include token-based authentication to secure API endpoints. This approach would ensure that metric postings and retrievals are protected against unauthorized access.
+* This version dispenses with `authentication and authorization strategy`; however, a system based on key API Or OAth2.0 could be implemented for the future.
 
-* **Error Handling:** In the current implementation, specific error handling strategies beyond basic validation errors are not detailed. Future versions could enhance resilience by handling common errors such as database timeouts or connectivity issues, providing clear error responses to API consumers.
+* In the current implementation, specific `error handling strategies` beyond basic validation errors are not implemented. Future versions could enhance resilience by handling common errors such as database timeouts or connectivity issues, providing clear error responses to API consumers.
 
-* **API Versioning Strategy:** To manage future API versions and maintain backward compatibility, the application adopt a versioning strategy within the URL path (e.g., /api/v1/metrics for the current version and /api/v2/metrics for future versions). This approach allows for parallel development of different API versions and smoother transition paths for API consumers. Version-specific changes can be managed through namespaced controllers and route configurations to ensure clear separation of logic between versions.
+* The application adopt a `API versioning strategy` within the URL path (e.g., /api/v1/metrics for the current version and /api/v2/metrics for future versions). This approach allows for parallel development of different API versions and smoother transition paths for API consumers. Version-specific changes can be managed through namespaced controllers and route configurations to ensure clear separation of logic between versions.
   
-* **Testing Strategy:** The application adopts a Behavior-Driven Development (BDD) approach with Cucumber for defining application behavior in plain language (E2E tests), making tests understandable to non-technical stakeholders. Additionally, RSpec is used for unit and integration testing, ensuring robust coverage of models and controllers.
+* The application adopts a `Behavior-Driven Development (BDD)` approach with Cucumber for defining application behavior in plain language (**E2E tests**), making tests understandable to non-technical stakeholders. Additionally, **RSpec** is used for **unit and integration testing**.
 
 #### Next Steps and Improvements
 * **Scalability Considerations:** 
@@ -84,10 +75,7 @@ An MVC pattern has been used (it does not need a view because it is an API) and 
 
 #### Technology Stack
 
-* **React:** Facilitates the creation of dynamic user interfaces, making it an ideal choice for real-time data visualization.
-* **Material-UI (MUI):** Utilized for designing a sleek and responsive user interface, leveraging its comprehensive library of ready-to-use components that adhere to Material Design principles.
-* **axios:** Employed for making HTTP requests to the backend, simplifying the process of fetching data from the API.
-* **React Router:** Manages navigation within the application, enabling seamless routing between different views without reloading the page.
+* `React:` Facilitates the creation of dynamic user interfaces, making it an ideal choice for real-time data visualization.
 
 #### Key Components
 * **App Component:** Serves as the entry point of the frontend application, integrating Material-UI's ThemeProvider for theme customization and managing the sidebar visibility state. It also sets up routing with React Router to navigate between different parts of the application, although the current implementation primarily focuses on the Dashboard.
@@ -109,7 +97,7 @@ The testing strategy for the frontend focuses on unit tests for the Dashboard co
 
 * **Performance Optimization:** Introduce performance optimization strategies such as:
 
-  * **Memoization:** Use React.memo for components and useMemo for expensive calculations to avoid unnecessary re-renders.
+  * **Memorization:** Use React.memo for components and useMemo for expensive calculations to avoid unnecessary re-renders.
   * **Code Splitting:** Leverage React's lazy loading and dynamic import() syntax to split the code into smaller chunks, loading them on demand.
 * **Testing Enhancements:** Expand the testing suite to cover more components and user interactions. Incorporating integration tests could also validate the application's behavior more comprehensively, especially the interaction between the Dashboard component and the LineChart component.
 
@@ -122,7 +110,7 @@ The testing strategy for the frontend focuses on unit tests for the Dashboard co
 1. Clone the repository
 
 ```bash
-  git clone <repository-url>
+  git clone https://github.com/beadn/CoolMetrics.git
 ```
 2. Backend setup
 
